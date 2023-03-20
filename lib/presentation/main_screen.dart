@@ -13,35 +13,31 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 35, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: Column(
           children: [
             const AppBarWidget(),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: size.height / 24 - 15,
             ),
             const SelectedCoin(),
-            const SizedBox(
-              height: 15,
-            ),
             const BodyCombined(),
-            const SizedBox(
-              height: 17,
-            ),
             BuyBtc(),
-            const SizedBox(
-              height: 28,
+            SizedBox(
+              height: size.height / 24 - 10,
             ),
             const OpenOrders(),
-            const SizedBox(
-              height: 12,
+            SizedBox(
+              height: size.height / 24 - 26,
             ),
             const ShowOrdersWidget(),
-            const SizedBox(
-              height: 9,
+            SizedBox(
+              height: size.height / 24 - 29,
             ),
             ValueListenableBuilder(
                 valueListenable: isSelected,
@@ -73,16 +69,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      height: size.height / 22,
+      height: size.height / 24,
       decoration: BoxDecoration(
-          border: Border.all(color: AppColors.greyDigitsColor, width: 0.5),
+          border: Border.all(color: AppColors.greyDigitsColor, width: 0.2),
           borderRadius: BorderRadius.circular(6)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: size.width / 2 - 21,
-            height: size.height / 22,
+            height: size.height / 24,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
@@ -105,7 +101,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           ),
           SizedBox(
               width: size.width / 2 - 21,
-              height: size.height / 22,
+              height: size.height / 24,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
@@ -136,18 +132,21 @@ class SelectedCoin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(AppImages.selectedCoinTop),
                 const SizedBox(
                   height: 5,
                 ),
-                Image.asset(AppImages.selectedCoinTop),
+                Image.asset(AppImages.selectedCoinBottom),
               ],
             ),
             const SizedBox(
@@ -164,8 +163,8 @@ class SelectedCoin extends StatelessWidget {
               width: 10,
             ),
             Container(
-              height: 24,
-              width: 64,
+              height: size.height / 24 - 8.7,
+              width: size.width / 6 - 1.5,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: const Color.fromRGBO(32, 201, 150, 0.226)),
@@ -200,13 +199,14 @@ class BtcAmountButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return IntrinsicWidth(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            width: 200,
-            height: 42,
+            width: size.width * 0.5 + 3.6,
+            height: size.height / 21 + 4.6,
             decoration: BoxDecoration(
                 color: AppColors.boxesBackgroundColor,
                 borderRadius: BorderRadius.circular(6)),
@@ -248,8 +248,8 @@ class BtcAmountButtons extends StatelessWidget {
             height: 14,
           ),
           Container(
-            width: 200,
-            height: 42,
+            width: size.width / 2 + 3.6,
+            height: size.height / 21 + 4.6,
             decoration: BoxDecoration(
                 color: AppColors.boxesBackgroundColor,
                 borderRadius: BorderRadius.circular(6)),
@@ -289,13 +289,16 @@ class BtcAmountButtons extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          SvgPicture.asset(AppImages.slider),
+          SvgPicture.asset(
+            AppImages.slider,
+            width: size.width / 2 + 3.6,
+          ),
           const SizedBox(
             height: 24,
           ),
           Container(
-            width: 200,
-            height: 42,
+            width: size.width / 2 + 3.6,
+            height: size.height / 21 + 4.6,
             decoration: BoxDecoration(
                 color: AppColors.boxesBackgroundColor,
                 borderRadius: BorderRadius.circular(6)),
@@ -381,6 +384,7 @@ class BodyCombined extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      // crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [BtcAmountButtons(), BtcCourse()],
     );
@@ -392,10 +396,21 @@ class BtcCourse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SvgPicture.asset(AppImages.loss),
-        SvgPicture.asset(AppImages.profit)
+        SizedBox(
+          width: size.width / 2.9,
+          height: size.height / 7 - 2.2,
+          child: SvgPicture.asset(
+            AppImages.loss,
+          ),
+        ),
+        SizedBox(
+            width: size.width / 2.9,
+            height: size.height / 5 + 0.9,
+            child: SvgPicture.asset(AppImages.profit))
       ],
     );
   }
@@ -407,13 +422,14 @@ class BuyBtc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: 200,
-          height: 40,
+          width: size.width / 2 + 3.6,
+          height: size.height / 21 + 4.6,
           decoration: BoxDecoration(
               color: AppColors.buyButtonColor,
               borderRadius: BorderRadius.circular(6)),
@@ -433,8 +449,9 @@ class BuyBtc extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 80,
-              height: 30,
+              padding: EdgeInsets.only(left: 20),
+              height: size.height / 27 + 0.9,
+              width: size.width / 6 + 14.5,
               decoration: BoxDecoration(
                   color: AppColors.boxesBackgroundColor,
                   borderRadius: BorderRadius.circular(6)),
@@ -464,8 +481,8 @@ class BuyBtc extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(4.0, 5, 4, 5),
-              width: 30,
-              height: 30,
+              height: size.height / 27 + 0.9,
+              width: size.width / 12 - 2.7,
               decoration: BoxDecoration(
                   color: AppColors.boxesBackgroundColor,
                   borderRadius: BorderRadius.circular(6)),
@@ -502,6 +519,8 @@ class OpenOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -509,8 +528,8 @@ class OpenOrders extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 123,
-                height: 24,
+                width: size.width / 4 + 24.8,
+                height: size.height / 27 - 5.1,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: AppColors.boxesBackgroundColor),
@@ -540,8 +559,8 @@ class OpenOrders extends StatelessWidget {
             borderRadius: BorderRadius.circular(2),
             border: Border.all(color: Colors.grey, width: 1.5),
           ),
-          width: 16,
-          height: 18,
+          width: size.width / 24 - 2.4,
+          height: size.height / 45 - 1.5,
           child: SvgPicture.asset(AppImages.itemsOfOrderIcon),
         )
       ],
@@ -559,6 +578,8 @@ class ShowOrdersWidget extends StatefulWidget {
 class _ShowOrdersWidgetState extends State<ShowOrdersWidget> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -589,8 +610,8 @@ class _ShowOrdersWidgetState extends State<ShowOrdersWidget> {
           ],
         ),
         Container(
-          width: 80,
-          height: 30,
+          height: size.height / 27 - 5.1,
+          width: size.width / 6 + 14.5,
           decoration: BoxDecoration(
               color: AppColors.boxesBackgroundColor,
               borderRadius: BorderRadius.circular(6)),
@@ -616,6 +637,8 @@ class ListOfOrders extends StatefulWidget {
 class _ListOfOrdersState extends State<ListOfOrders> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -724,8 +747,8 @@ class _ListOfOrdersState extends State<ListOfOrders> {
                         ],
                       ),
                       Container(
-                        width: 80,
-                        height: 30,
+                        height: size.height / 27 - 5.1,
+                        width: size.width / 6 - 0.5,
                         decoration: BoxDecoration(
                             color: AppColors.boxesBackgroundColor,
                             borderRadius: BorderRadius.circular(6)),
